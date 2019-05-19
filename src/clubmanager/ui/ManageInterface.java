@@ -71,15 +71,11 @@ public class ManageInterface extends JFrame {
 		
 		JButton btnManageEvents = new JButton("Events");
 		btnManageEvents.addMouseListener(new MouseAdapter() {
-		
 			@Override
-			
 			public void mouseClicked(MouseEvent arg0) {
-			}/*
-			EventApp frame = new EventApp();
-			frame.setVisible(true);
-			frame.setLocationRelativeTo(null);
-			*/
+				EventApp frame = new EventApp();
+				frame.setVisible(true);
+			}	
 		});
 		btnManageEvents.setBounds(263, 449, 196, 76);
 		contentPane.add(btnManageEvents);
