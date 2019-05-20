@@ -70,10 +70,4 @@ public class EventTableModel extends AbstractTableModel {
 		}
 	}
 
-	@Override
-	public Class getColumnClass(int c) {
-		return getValueAt(0, c).getClass();
-		//a quoi ça sert
-	}
-	
 }

@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import clubmanager.core.Event;
 import clubmanager.dao.EventDAO;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class EventDialog extends JDialog {
 	private JTextField officialSponsorTextField;
@@ -19,17 +21,14 @@ public class EventDialog extends JDialog {
 	private JTextField dateTextField;
 	private JTextField nameEventTextField;
 	private EventDAO eventDAO;
-
 	private EventApp eventApp;
-
 	private Event previousEvent = null;
 	private boolean updateMode = false;
 
 	/**
 	 * Launch the application.
 	 */
-	public EventDialog(EventApp theEventApp,
-			EventDAO theeventDAO, Event thePreviousEvent, boolean theUpdateMode) {
+	public EventDialog(EventApp theEventApp,EventDAO theeventDAO, Event thePreviousEvent, boolean theUpdateMode) {
 		this();
 	
 		eventDAO = theeventDAO;
@@ -63,10 +62,11 @@ public class EventDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public EventDialog() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EventDialog.class.getResource("/clubmanager/ui/pictures/logo2.png")));
+		setResizable(false);
+		setTitle("ClubManager App                                                      Events");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EventDialog.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setTitle("Add Event");
-		setBounds(100, 100, 631, 621);
+		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		{
@@ -89,7 +89,7 @@ public class EventDialog extends JDialog {
 		}
 		{
 			JLabel lblLogin = new JLabel("Name of event");
-			lblLogin.setBounds(113, 152, 82, 14);
+			lblLogin.setBounds(113, 159, 82, 14);
 			getContentPane().add(lblLogin);
 		}
 		{
@@ -119,7 +119,9 @@ public class EventDialog extends JDialog {
 			getContentPane().add(okButton);
 			okButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					saveTreasury();
+					
+					saveEvent();
+					eventApp.refreshEventsView();
 				}
 			});
 			okButton.setActionCommand("OK");
@@ -137,6 +139,19 @@ public class EventDialog extends JDialog {
 			});
 			cancelButton.setActionCommand("Cancel");
 		}
+		
+		JLabel label_1 = new JLabel("");
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ManageInterface frame1 = new ManageInterface();
+				frame1.setVisible(true);
+				dispose();
+			}
+		});
+		label_1.setIcon(new ImageIcon(EventDialog.class.getResource("/clubmanager/ui/pictures/home.png")));
+		label_1.setBounds(10, 11, 55, 59);
+		getContentPane().add(label_1);
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));
 		label.setBounds(0, 0, 615, 626);
@@ -144,7 +159,7 @@ public class EventDialog extends JDialog {
 	}
 
 
-	protected void saveTreasury() {
+	protected void saveEvent() {
 
 		// get the Event info from gui
 		int date_of_event =Integer.parseInt(dateTextField.getText());
@@ -190,9 +205,5 @@ public class EventDialog extends JDialog {
 					JOptionPane.ERROR_MESSAGE);
 		}
 
-	}
-	private int ParseInt(String text) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 }

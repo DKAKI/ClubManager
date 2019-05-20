@@ -26,6 +26,8 @@ import java.util.List;
 import clubmanager.core.Member;
 import clubmanager.dao.MemberDAO;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MemberApp extends JFrame {
 
@@ -40,6 +42,7 @@ public class MemberApp extends JFrame {
 	
 	
 	private MemberDAO memberDAO;//important attribut used to have the ability to perform 
+	private JLabel lblNewLabel;
 	//all methods of EmployeDAO on the object employeDAO	
 	/**
 	 * Launch the application.
@@ -62,7 +65,10 @@ public class MemberApp extends JFrame {
 	 * Create the frame.
 	 */
 	public MemberApp() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MemberApp.class.getResource("/clubmanager/ui/pictures/logo2.png")));
+		setResizable(false);
+		setTitle("ClubManager App                                Members");
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MemberApp.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		
 		// create the DAO
 		try {
@@ -74,7 +80,7 @@ public class MemberApp extends JFrame {
 		
 		setTitle("Club Manager App");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 631, 621);
+		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -112,6 +118,19 @@ public class MemberApp extends JFrame {
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(425, 99, 135, 23);
 		contentPane.add(btnSearch);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				ManageInterface frame = new ManageInterface();
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		lblNewLabel.setIcon(new ImageIcon(MemberApp.class.getResource("/clubmanager/ui/pictures/home.png")));
+		lblNewLabel.setBounds(10, 11, 48, 50);
+		contentPane.add(lblNewLabel);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));

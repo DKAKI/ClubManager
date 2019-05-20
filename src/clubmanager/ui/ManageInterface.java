@@ -1,6 +1,7 @@
 package clubmanager.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -24,8 +25,8 @@ public class ManageInterface extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ManageInterface frame = new ManageInterface();
-					frame.setVisible(true);
+					ManageInterface frame1 = new ManageInterface();
+					frame1.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -37,21 +38,25 @@ public class ManageInterface extends JFrame {
 	 * Create the frame.
 	 */
 	public ManageInterface() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ManageInterface.class.getResource("/clubmanager/ui/pictures/logo2.png")));
+		setResizable(false);
+		setTitle("ClubManager App                                                      Main Menu");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ManageInterface.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 631, 621);
+		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+	
 		JButton btnManageMembers = new JButton("Members");
 		btnManageMembers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				MemberApp frame = new MemberApp();
 				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+				dispose();
 			}
 		});
 		btnManageMembers.setBounds(263, 140, 196, 76);
@@ -64,22 +69,22 @@ public class ManageInterface extends JFrame {
 				TreasuryApp frame = new TreasuryApp();
 				frame.setVisible(true);
 				frame.setLocationRelativeTo(null);
-			}
+				dispose();
+			
+				}
 		});
 		btnManageTreasury.setBounds(263, 299, 196, 76);
 		contentPane.add(btnManageTreasury);
 		
 		JButton btnManageEvents = new JButton("Events");
 		btnManageEvents.addMouseListener(new MouseAdapter() {
-		
 			@Override
-			
 			public void mouseClicked(MouseEvent arg0) {
-			}/*
-			EventApp frame = new EventApp();
-			frame.setVisible(true);
-			frame.setLocationRelativeTo(null);
-			*/
+				EventApp frame = new EventApp();
+				frame.setVisible(true);
+				frame.setLocationRelativeTo(null);
+				dispose();
+			}	
 		});
 		btnManageEvents.setBounds(263, 449, 196, 76);
 		contentPane.add(btnManageEvents);

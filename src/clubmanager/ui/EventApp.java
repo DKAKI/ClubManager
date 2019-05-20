@@ -19,6 +19,8 @@ import javax.swing.border.EmptyBorder;
 import clubmanager.core.Event;
 import clubmanager.dao.EventDAO;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class EventApp extends JFrame {
 	private EventDAO eventDAO;
@@ -45,7 +47,10 @@ public class EventApp extends JFrame {
 	 * Create the frame.
 	 */
 	public EventApp() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EventApp.class.getResource("/clubmanager/ui/pictures/logo2.png")));
+		setResizable(false);
+		setTitle("ClubManager App                                                      Events");
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EventApp.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		
 		// create the DAO
 		try {
@@ -56,7 +61,7 @@ public class EventApp extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 631, 621);
+		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -83,7 +88,7 @@ public class EventApp extends JFrame {
 		btnDeleteEvent.setBounds(425, 493, 135, 23);
 		contentPane.add(btnDeleteEvent);
 		
-		JLabel lblEnterResponsibleEvent = new JLabel("Enter the name of the Responsible of Event ");
+		JLabel lblEnterResponsibleEvent = new JLabel("Enter the name of the Name of Event ");
 		lblEnterResponsibleEvent.setBounds(52, 103, 241, 14);
 		contentPane.add(lblEnterResponsibleEvent);
 		
@@ -95,6 +100,19 @@ public class EventApp extends JFrame {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setBounds(455, 99, 105, 23);
 		contentPane.add(btnSearch);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ManageInterface frame = new ManageInterface();
+				frame.setVisible(true);
+				dispose();
+			}
+		});
+		label_1.setIcon(new ImageIcon(EventApp.class.getResource("/clubmanager/ui/pictures/home.png")));
+		label_1.setBounds(10, 11, 53, 50);
+		contentPane.add(label_1);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));

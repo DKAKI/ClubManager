@@ -26,6 +26,8 @@ import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MemberDialog extends JDialog {
 	private JTextField firstNameTextField;
@@ -78,10 +80,12 @@ public class MemberDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public MemberDialog() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MemberDialog.class.getResource("/clubmanager/ui/pictures/logo2.png")));
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MemberDialog.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setTitle("Add Member");
-		setBounds(100, 100, 631, 621);
+		setTitle("ClubManager App                                                      Members");
+
+		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		passwordTextField = new JTextField();
@@ -162,6 +166,20 @@ public class MemberDialog extends JDialog {
 				}
 			});
 			cancelButton.setActionCommand("Cancel");
+		}
+		{
+			JLabel label_1 = new JLabel("");
+			label_1.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					ManageInterface frame = new ManageInterface();
+					frame.setVisible(true);
+					dispose();
+				}
+			});
+			label_1.setIcon(new ImageIcon(MemberDialog.class.getResource("/clubmanager/ui/pictures/home.png")));
+			label_1.setBounds(10, 11, 58, 61);
+			getContentPane().add(label_1);
 		}
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));

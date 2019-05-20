@@ -30,7 +30,7 @@ import java.awt.Toolkit;
 public class Login {
 	
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField loginField;
 	private JButton btnLogin;
 	private MemberDAO memberdao;
@@ -77,19 +77,23 @@ public class Login {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/clubmanager/ui/pictures/logo2.png")));
-		frame.setBounds(100, 100, 631, 621);
+		frame.setResizable(false);
+		frame.setTitle("ClubManager App                                                      Sign In");
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
+		frame.setBounds(100, 100, 608, 621);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
+		// Set the frame background color to a transparent color
+	
 		
 		loginField = new JTextField();
-		loginField.setBounds(238, 200, 214, 38);
+		loginField.setBounds(218, 196, 214, 38);
 		frame.getContentPane().add(loginField);
 		loginField.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(238, 285, 214, 38);
+		passwordField.setBounds(218, 279, 214, 38);
 		frame.getContentPane().add(passwordField);
 		
 		btnLogin = new JButton("Login Now");
@@ -108,6 +112,15 @@ public class Login {
 				String passwordField1=passwordField.getText();
 				String loginField1=loginField.getText();
 				
+				if (passwordField1.equals("") ||loginField1.equals("") ) {
+					
+					JOptionPane.showMessageDialog(frame,
+							"Please fill all the fields ", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					
+				}
+				else {
+					
 					try {
 						memberdao.loginOrNot(loginField1, passwordField1);
 						Login window = new Login();
@@ -118,20 +131,20 @@ public class Login {
 						e1.printStackTrace();
 					}
 					
-			
+				}
 			}
 			
 		}
 				);
 		
-		btnLogin.setBounds(272, 359, 101, 48);
+		btnLogin.setBounds(255, 352, 101, 48);
 		frame.getContentPane().add(btnLogin);
 		
 		lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBackground(Color.WHITE);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setIcon(new ImageIcon(Login.class.getResource("/clubmanager/ui/pictures/signIn.PNG")));
-		lblNewLabel.setBounds(0, -13, 622, 611);
+		lblNewLabel.setBounds(-20, -19, 622, 611);
 		frame.getContentPane().add(lblNewLabel);
 	}
 	private static class __Tmp {
