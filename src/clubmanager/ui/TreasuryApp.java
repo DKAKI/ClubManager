@@ -85,17 +85,17 @@ public class TreasuryApp extends JFrame {
 		btnDeleteTreasury.setBounds(425, 493, 135, 23);
 		contentPane.add(btnDeleteTreasury);
 		
-		JLabel lblEnterResponsibleTreasury = new JLabel("Enter the name of the Responsible of Treasury ");
-		lblEnterResponsibleTreasury.setBounds(52, 103, 127, 14);
+		JLabel lblEnterResponsibleTreasury = new JLabel("Enter the name of the Responsible of Treasury :");
+		lblEnterResponsibleTreasury.setBounds(52, 103, 241, 14);
 		contentPane.add(lblEnterResponsibleTreasury);
 		
 		JTextField responsibleTreasuryTextField = new JTextField();
-		responsibleTreasuryTextField.setBounds(189, 100, 210, 20);
+		responsibleTreasuryTextField.setBounds(292, 100, 154, 20);
 		contentPane.add(responsibleTreasuryTextField);
 		responsibleTreasuryTextField.setColumns(10);
 		
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(425, 99, 135, 23);
+		btnSearch.setBounds(456, 99, 104, 23);
 		contentPane.add(btnSearch);
 		
 		JLabel label = new JLabel("");

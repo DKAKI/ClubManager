@@ -202,7 +202,7 @@ public class EventDAO {
 		
 		EventDAO dao = new EventDAO();
 		Event tres = new Event(2001,3,"sdf","sdf","sdf");
-		//dao.updateEvent(tres);
+		dao.updateEvent(tres);
 		dao.addEvent(tres);
 		dao.deleteEvent(12);
 		System.out.println(dao.searchEvent("sdf"));//this is just a try

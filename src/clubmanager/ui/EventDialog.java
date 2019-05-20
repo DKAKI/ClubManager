@@ -19,17 +19,14 @@ public class EventDialog extends JDialog {
 	private JTextField dateTextField;
 	private JTextField nameEventTextField;
 	private EventDAO eventDAO;
-
 	private EventApp eventApp;
-
 	private Event previousEvent = null;
 	private boolean updateMode = false;
 
 	/**
 	 * Launch the application.
 	 */
-	public EventDialog(EventApp theEventApp,
-			EventDAO theeventDAO, Event thePreviousEvent, boolean theUpdateMode) {
+	public EventDialog(EventApp theEventApp,EventDAO theeventDAO, Event thePreviousEvent, boolean theUpdateMode) {
 		this();
 	
 		eventDAO = theeventDAO;
@@ -89,7 +86,7 @@ public class EventDialog extends JDialog {
 		}
 		{
 			JLabel lblLogin = new JLabel("Name of event");
-			lblLogin.setBounds(113, 152, 82, 14);
+			lblLogin.setBounds(113, 159, 82, 14);
 			getContentPane().add(lblLogin);
 		}
 		{
