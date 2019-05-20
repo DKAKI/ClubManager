@@ -62,13 +62,19 @@ public class OpeningLogo extends JFrame{
 	 		Timer timer = new Timer(4000, new ActionListener(){      // Timer 4 seconds
 	           @Override 
 	           public void actionPerformed(ActionEvent e) {
-	        	   frame.dispose(); 	   
+	        	   frame.setVisible(false);
+	        	   Login window = new Login();
+	        	   window.frame.setVisible(true);   
 	            }
 	        });
-			timer.start();  
-			Login window = new Login();
-			window.frame.setVisible(true);
-	
+	 		timer.start(); 
+			timer.setRepeats(false);
+	 		
+			 
+			
+			;
+			
+
 	}
 
 }
