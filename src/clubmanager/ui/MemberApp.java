@@ -78,7 +78,7 @@ public class MemberApp extends JFrame {
 		//why sometimes we write just this without refering to the the class or the object
 		}
 		
-		setTitle("Club Manager App");
+		setTitle("Club Manager App                                                      Member");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);

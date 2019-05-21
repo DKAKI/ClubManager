@@ -26,16 +26,21 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
+import javax.swing.JCheckBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.border.EmptyBorder;
 
 public class Login {
 	
 
-	JFrame frame;
+	public JFrame frame;
 	private JTextField loginField;
 	private JButton btnLogin;
 	private MemberDAO memberdao;
 	private JPasswordField passwordField;
 	private JLabel lblNewLabel;
+	private JCheckBox chckbxshowPassword;
 
 
 
@@ -107,9 +112,15 @@ public class Login {
 		btnLogin.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				
+				String passwordField1="";
 				//window.setVisible(false);
-				String passwordField1=passwordField.getText();
+				char[] passwordField2=passwordField.getPassword();//jPasswordField.getPassword();
+				for(int i=0;i<passwordField2.length;i++) {
+				//String passwordField1="";
+				passwordField1+=passwordField2[i];
+				}
+			//	System.out.println(passwordField1);
+				
 				String loginField1=loginField.getText();
 				
 				if (passwordField1.equals("") ||loginField1.equals("") ) {
@@ -140,7 +151,25 @@ public class Login {
 		btnLogin.setBounds(255, 352, 101, 48);
 		frame.getContentPane().add(btnLogin);
 		
+		chckbxshowPassword = new JCheckBox("");
+		chckbxshowPassword.setBackground(new Color(51, 153, 255));
+		chckbxshowPassword.setBorder(null);
+		chckbxshowPassword.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				passwordField.setEchoChar('*');
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				passwordField.setEchoChar((char)0);
+			}
+		});
+		chckbxshowPassword.setBounds(166, 425, 13, 13);
+		frame.getContentPane().add(chckbxshowPassword);
+		
 		lblNewLabel = new JLabel("New label");
+		lblNewLabel.setBorder(new EmptyBorder(0, 1, 2, 0));
 		lblNewLabel.setBackground(Color.WHITE);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setIcon(new ImageIcon(Login.class.getResource("/clubmanager/ui/pictures/signIn.PNG")));

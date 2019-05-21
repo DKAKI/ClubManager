@@ -21,6 +21,8 @@ import javax.swing.border.EmptyBorder;
 import clubmanager.core.Treasury;
 import clubmanager.dao.TreasuryDAO;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TreasuryApp extends JFrame {
 	private TreasuryDAO treasuryDAO;
@@ -47,7 +49,9 @@ public class TreasuryApp extends JFrame {
 	 * Create the frame.
 	 */
 	public TreasuryApp() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(TreasuryApp.class.getResource("/clubmanager/ui/pictures/logo2.png")));
+		setTitle("ClubManager App                                                      Treasury");
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TreasuryApp.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		
 		// create the DAO
 		try {
@@ -58,7 +62,7 @@ public class TreasuryApp extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 631, 621);
+		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -86,17 +90,29 @@ public class TreasuryApp extends JFrame {
 		contentPane.add(btnDeleteTreasury);
 		
 		JLabel lblEnterResponsibleTreasury = new JLabel("Enter the name of the Responsible of Treasury ");
-		lblEnterResponsibleTreasury.setBounds(52, 103, 127, 14);
+		lblEnterResponsibleTreasury.setBounds(52, 103, 248, 14);
 		contentPane.add(lblEnterResponsibleTreasury);
 		
 		JTextField responsibleTreasuryTextField = new JTextField();
-		responsibleTreasuryTextField.setBounds(189, 100, 210, 20);
+		responsibleTreasuryTextField.setBounds(299, 100, 142, 20);
 		contentPane.add(responsibleTreasuryTextField);
 		responsibleTreasuryTextField.setColumns(10);
 		
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(425, 99, 135, 23);
+		btnSearch.setBounds(451, 99, 109, 23);
 		contentPane.add(btnSearch);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ManageInterface frame = new ManageInterface();
+				frame.setVisible(true);
+				dispose();			}
+		});
+		label_1.setIcon(new ImageIcon(TreasuryApp.class.getResource("/clubmanager/ui/pictures/home.png")));
+		label_1.setBounds(10, 11, 55, 50);
+		contentPane.add(label_1);
 		
 		JLabel label = new JLabel("");
 		label.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));
@@ -215,6 +231,7 @@ public class TreasuryApp extends JFrame {
 
 				// show dialog
 				dialog.setVisible(true);
+			
 			}
 		});
 	}
