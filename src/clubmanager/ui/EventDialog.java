@@ -160,9 +160,20 @@ public class EventDialog extends JDialog {
 
 
 	protected void saveEvent() {
-
-		// get the Event info from gui
-		int date_of_event =Integer.parseInt(dateTextField.getText());
+		try {
+			int date_of_event=Integer.parseInt(dateTextField.getText());
+		}
+		catch ( NumberFormatException JKLH) {
+			JOptionPane.showMessageDialog(eventApp,"You should Enter a valid date ", "Error",JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
+		int date_of_event=0;
+		// get the Event info from gui	
+		if (dateTextField.getText().equals(""))
+			date_of_event=0;
+		date_of_event =Integer.parseInt(dateTextField.getText());
+		
 		String name_event =nameEventTextField.getText();
 		String official_sponsor = officialSponsorTextField.getText();
 		String place = placeTextField.getText();
@@ -183,9 +194,20 @@ public class EventDialog extends JDialog {
 		try {
 			// save to the database
 			if (updateMode) {
-				eventDAO.updateEvent(tempEvent);
+					if (date_of_event==0 || name_event.equals("") ||  official_sponsor.equals("") ||  place.equals("")) {
+					
+					JOptionPane.showMessageDialog(eventApp,"You should fill out all the fields ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;}
+					else 
+						eventDAO.updateEvent(tempEvent);
+					
 			} else {
-				eventDAO.addEvent(tempEvent);
+					if (date_of_event==0 || name_event.equals("") ||  official_sponsor.equals("") ||  place.equals("")) {
+					
+					JOptionPane.showMessageDialog(eventApp,"You should fill out all the fields ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;}
+					else 
+						eventDAO.addEvent(tempEvent);
 			}
 
 			// close dialog

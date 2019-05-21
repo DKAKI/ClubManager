@@ -216,10 +216,26 @@ public class MemberDialog extends JDialog {
 
 		try {
 			// save to the database
-			if (updateMode) {
-				memberDAO.updateMember(tempMember);
+			if (updateMode ) {
+				if (login.equals("") || password.equals("") ||  firstName.equals("") ||  lastName.equals("") ||  email.equals("")) {
+					
+					JOptionPane.showMessageDialog(memberApp,"You should fill out all the fields ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else {
+					
+					memberDAO.updateMember(tempMember);
+				}
+					
 			} else {
-				memberDAO.addMember(tempMember);
+				
+				if (login.equals("") || password.equals("") ||  firstName.equals("") ||  lastName.equals("") ||  email.equals("")) {
+					
+					JOptionPane.showMessageDialog(memberApp,"You should fill out all the fields ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+					else
+						memberDAO.addMember(tempMember);
 			}
 
 			// close dialog
