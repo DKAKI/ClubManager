@@ -89,22 +89,22 @@ public class EventDialog extends JDialog {
 		}
 		{
 			JLabel lblLogin = new JLabel("Name of event");
-			lblLogin.setBounds(113, 159, 82, 14);
+			lblLogin.setBounds(80, 152, 140, 14);
 			getContentPane().add(lblLogin);
 		}
 		{
 			JLabel lblPassword = new JLabel("date");
-			lblPassword.setBounds(113, 229, 82, 14);
+			lblPassword.setBounds(80, 222, 140, 14);
 			getContentPane().add(lblPassword);
 		}
 		{
 			JLabel lblFirstName = new JLabel("Official Sponsor");
-			lblFirstName.setBounds(113, 309, 82, 14);
+			lblFirstName.setBounds(80, 302, 140, 14);
 			getContentPane().add(lblFirstName);
 		}
 		{
 			JLabel lblLastName = new JLabel("Place");
-			lblLastName.setBounds(113, 386, 69, 14);
+			lblLastName.setBounds(80, 379, 140, 14);
 			getContentPane().add(lblLastName);
 		}
 		{
@@ -152,17 +152,29 @@ public class EventDialog extends JDialog {
 		label_1.setIcon(new ImageIcon(EventDialog.class.getResource("/clubmanager/ui/pictures/home.png")));
 		label_1.setBounds(10, 11, 55, 59);
 		getContentPane().add(label_1);
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));
-		label.setBounds(0, 0, 615, 626);
-		getContentPane().add(label);
+
+		JLabel labelBg = new JLabel("");
+		labelBg.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));
+		labelBg.setBounds(0, 0, 626, 626);
+		getContentPane().add(labelBg);
 	}
 
 
 	protected void saveEvent() {
-
-		// get the Event info from gui
-		int date_of_event =Integer.parseInt(dateTextField.getText());
+		try {
+			int date_of_event=Integer.parseInt(dateTextField.getText());
+		}
+		catch ( NumberFormatException JKLH) {
+			JOptionPane.showMessageDialog(eventApp,"You should Enter a valid date ", "Error",JOptionPane.ERROR_MESSAGE);
+		}
+		
+		
+		int date_of_event=0;
+		// get the Event info from gui	
+		if (dateTextField.getText().equals(""))
+			date_of_event=0;
+		date_of_event =Integer.parseInt(dateTextField.getText());
+		
 		String name_event =nameEventTextField.getText();
 		String official_sponsor = officialSponsorTextField.getText();
 		String place = placeTextField.getText();
@@ -183,9 +195,20 @@ public class EventDialog extends JDialog {
 		try {
 			// save to the database
 			if (updateMode) {
-				eventDAO.updateEvent(tempEvent);
+					if (date_of_event==0 || name_event.equals("") ||  official_sponsor.equals("") ||  place.equals("")) {
+					
+					JOptionPane.showMessageDialog(eventApp,"You should fill out all the fields ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;}
+					else 
+						eventDAO.updateEvent(tempEvent);
+					
 			} else {
-				eventDAO.addEvent(tempEvent);
+					if (date_of_event==0 || name_event.equals("") ||  official_sponsor.equals("") ||  place.equals("")) {
+					
+					JOptionPane.showMessageDialog(eventApp,"You should fill out all the fields ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;}
+					else 
+						eventDAO.addEvent(tempEvent);
 			}
 
 			// close dialog

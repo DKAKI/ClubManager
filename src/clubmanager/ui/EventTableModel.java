@@ -17,9 +17,9 @@ public class EventTableModel extends AbstractTableModel {
 	
 	public static final int OBJECT_COL = -1;// why we initialized it with -1
 	private static final int DATE_EVENT_COL = 1;
-	private static final int NAME_EVENT_COL = 3;
+	private static final int NAME_EVENT_COL = 0;
 	private static final int OFFICIAL_SPONSOR_COL = 2;
-	private static final int PLACE_COL = 0;
+	private static final int PLACE_COL = 3;
 
 	private String[] columnNames = { "Name of event", "date", "Official Sponsor", "Place"};
 	private List<Event> event;
