@@ -3,20 +3,26 @@ package clubmanager.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+
+import clubmanager.dao.MemberDAO;
 
 public class ManageInterface extends JFrame {
 
 	private JPanel contentPane;
+	private MemberDAO memberDAO;
+	private Login login;
 
 	/**
 	 * Launch the application.
@@ -38,6 +44,12 @@ public class ManageInterface extends JFrame {
 	 * Create the frame.
 	 */
 	public ManageInterface() {
+		try {
+			memberDAO = new MemberDAO();
+		} catch (Exception exc) {
+			JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); //what does this method perform with these 4 parameters??
+		//why sometimes we write just this without refering to the the class or the object
+		}
 		setResizable(false);
 		setTitle("ClubManager App                                                      Main Menu");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ManageInterface.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
@@ -53,10 +65,11 @@ public class ManageInterface extends JFrame {
 		btnManageMembers.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MemberApp frame = new MemberApp();
-				frame.setVisible(true);
-				frame.setLocationRelativeTo(null);
-				dispose();
+		
+					MemberApp frame = new MemberApp();
+					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
+				
 			}
 		});
 		btnManageMembers.setBounds(263, 140, 196, 76);
@@ -73,6 +86,26 @@ public class ManageInterface extends JFrame {
 			
 				}
 		});
+		{
+			JLabel lblLogout = new JLabel("");
+			lblLogout.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					Login window = new Login();
+					window.frame.setVisible(true);
+					window.frame.setLocationRelativeTo(null);
+					dispose();
+				}
+			});
+			lblLogout.setIcon(new ImageIcon(EventDialog.class.getResource("/clubmanager/ui/pictures/LOOG.png")));
+			lblLogout.setBounds(532, 11, 70, 70);
+			getContentPane().add(lblLogout);
+		}
+		{
+			JLabel lblLogOut = new JLabel("Log out");
+			lblLogOut.setBounds(542, 81, 46, 14);
+			getContentPane().add(lblLogOut);
+		}
 		btnManageTreasury.setBounds(263, 299, 196, 76);
 		contentPane.add(btnManageTreasury);
 		

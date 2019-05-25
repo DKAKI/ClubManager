@@ -140,28 +140,38 @@ public class MemberDAO {
    
 	    try {
 	
-        pst=myConn.prepareStatement("select * from login where login=? and password=?");
-        System.out.println("test");
+        pst=myConn.prepareStatement("select * from members where login=? and password=?");
         pst.setString(1,loginField1); 
         pst.setString(2, passwordField1);
         rs=pst.executeQuery();
        if (rs.next()){
-        	String validLogin=rs.getString(1);
-        	String validPassword=rs.getString(2);
+        	String validLogin=rs.getString(2);
+        	String validPassword=rs.getString(3);
+        	String validtype=rs.getString(7);
             JOptionPane.showMessageDialog(null, "Log in Successful.");
         	/*
             rs.close();
             pst.close();   
             myConn.close();
 		*///	if (!loginField1.equals(validLogin) || !passwordField1.equals(validPassword)) {
-	
-        	ManageInterface frame = new ManageInterface();
-			frame.setVisible(true);
-			frame.setLocationRelativeTo(null);
+	            if 	(validtype.equals("admin")) {
+	            	JOptionPane.showMessageDialog(null, "Welcome ADMIN  "+validLogin);
+		        	ManageInterface frame = new ManageInterface();
+					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
+	            }
+	            else
+	            {
+	            	 JOptionPane.showMessageDialog(null, "Welcome USER "+validLogin);
+	            	 ManageInterface frame1 = new ManageInterface();
+					 frame1.setVisible(true);
+	            }
 			
 			}
 			else {
 			JOptionPane.showMessageDialog(null, "The Login you entererd or the password is incorrect. Try again");
+			Login window = new Login();
+			window.frame.setVisible(true);
 			
 		}
      
@@ -173,7 +183,41 @@ public class MemberDAO {
 		}
 	}
         
-    
+	public void adminOrNot(String loginField3,String passwordField3)  throws SQLException {
+		
+		    ResultSet rs=null;
+		    PreparedStatement pst=null;
+	   
+		    try {
+	        pst=myConn.prepareStatement("select * from members where login=? and password=?");
+	        pst.setString(1,loginField3); 
+	        pst.setString(2, passwordField3);
+	        rs=pst.executeQuery();
+	       if (rs.next()){
+	        	String validLogin=rs.getString(2);
+	        	String validPassword=rs.getString(3);
+	        	String validtype=rs.getString(7);
+	        	
+		            if 	(validtype.equals("admin")) {
+		            	JOptionPane.showMessageDialog(null, "Welcome ADMIN  "+validLogin);
+		            	MemberApp frame = new MemberApp();
+						frame.setVisible(true);
+						frame.setLocationRelativeTo(null);
+		            }
+		            else
+		            {
+		            	 JOptionPane.showMessageDialog(null, "Welcome USER "+validLogin);
+		            	
+		            }
+				
+				}
+	        }
+
+		    catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	/*
 	public void loginOrNot(String userLogin, String userPassword) throws SQLException {
 		System.out.println("test");

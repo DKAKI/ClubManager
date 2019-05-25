@@ -75,7 +75,26 @@ public class EventApp extends JFrame {
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		
+		{
+			JLabel lblLogout = new JLabel("");
+			lblLogout.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					Login window = new Login();
+					window.frame.setVisible(true);
+					window.frame.setLocationRelativeTo(null);
+					dispose();
+				}
+			});
+			lblLogout.setIcon(new ImageIcon(EventDialog.class.getResource("/clubmanager/ui/pictures/LOOG.png")));
+			lblLogout.setBounds(532, 11, 70, 70);
+			getContentPane().add(lblLogout);
+		}
+		{
+			JLabel lblLogOut = new JLabel("Log out");
+			lblLogOut.setBounds(542, 81, 46, 14);
+			getContentPane().add(lblLogOut);
+		}
 		JButton btnAddEvent = new JButton("Add Event");
 		btnAddEvent.setBounds(52, 493, 142, 23);
 		contentPane.add(btnAddEvent);

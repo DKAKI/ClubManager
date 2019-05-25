@@ -78,7 +78,7 @@ public class MemberApp extends JFrame {
 		//why sometimes we write just this without refering to the the class or the object
 		}
 		
-		setTitle("Club Manager App");
+		setTitle("Club Manager App                                                      Member");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
@@ -128,6 +128,26 @@ public class MemberApp extends JFrame {
 				dispose();
 			}
 		});
+		{
+			JLabel lblLogout = new JLabel("");
+			lblLogout.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					Login window = new Login();
+					window.frame.setVisible(true);
+					window.frame.setLocationRelativeTo(null);
+					dispose();
+				}
+			});
+			lblLogout.setIcon(new ImageIcon(EventDialog.class.getResource("/clubmanager/ui/pictures/LOOG.png")));
+			lblLogout.setBounds(532, 11, 70, 70);
+			getContentPane().add(lblLogout);
+		}
+		{
+			JLabel lblLogOut = new JLabel("Log out");
+			lblLogOut.setBounds(542, 81, 46, 14);
+			getContentPane().add(lblLogOut);
+		}
 		lblNewLabel.setIcon(new ImageIcon(MemberApp.class.getResource("/clubmanager/ui/pictures/home.png")));
 		lblNewLabel.setBounds(10, 11, 48, 50);
 		contentPane.add(lblNewLabel);

@@ -21,11 +21,14 @@ import javax.swing.border.EmptyBorder;
 import clubmanager.core.Treasury;
 import clubmanager.dao.TreasuryDAO;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TreasuryApp extends JFrame {
 	private TreasuryDAO treasuryDAO;
 	private JTable table;
 	private JPanel contentPane;
+	private JTextField Sumtf;
 
 	/**
 	 * Launch the application.
@@ -47,7 +50,9 @@ public class TreasuryApp extends JFrame {
 	 * Create the frame.
 	 */
 	public TreasuryApp() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(TreasuryApp.class.getResource("/clubmanager/ui/pictures/logo2.png")));
+		setTitle("ClubManager App                                                      Treasury");
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TreasuryApp.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		
 		// create the DAO
 		try {
@@ -58,7 +63,7 @@ public class TreasuryApp extends JFrame {
 		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 631, 621);
+		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,35 +78,94 @@ public class TreasuryApp extends JFrame {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		JButton btnAddTreasury = new JButton("Add Sum");
-		btnAddTreasury.setBounds(52, 493, 142, 23);
+		JButton btnAddTreasury = new JButton("Add Contribution");
+		btnAddTreasury.setBounds(52, 493, 155, 23);
 		contentPane.add(btnAddTreasury);
 		
-		JButton btnUpdateTreasury = new JButton("Update Sum");
-		btnUpdateTreasury.setBounds(243, 493, 142, 23);
+		JButton btnUpdateTreasury = new JButton("Update Contribution");
+		btnUpdateTreasury.setBounds(230, 493, 165, 23);
 		contentPane.add(btnUpdateTreasury);
 		
-		JButton btnDeleteTreasury = new JButton("Delete Sum");
-		btnDeleteTreasury.setBounds(425, 493, 135, 23);
+		JButton btnDeleteTreasury = new JButton("Delete Contribution");
+		btnDeleteTreasury.setBounds(418, 493, 142, 23);
 		contentPane.add(btnDeleteTreasury);
 		
 		JLabel lblEnterResponsibleTreasury = new JLabel("Enter the name of the Responsible of Treasury ");
-		lblEnterResponsibleTreasury.setBounds(52, 103, 127, 14);
+		lblEnterResponsibleTreasury.setBounds(52, 103, 270, 14);
 		contentPane.add(lblEnterResponsibleTreasury);
 		
 		JTextField responsibleTreasuryTextField = new JTextField();
-		responsibleTreasuryTextField.setBounds(189, 100, 210, 20);
+		responsibleTreasuryTextField.setBounds(332, 100, 109, 20);
 		contentPane.add(responsibleTreasuryTextField);
 		responsibleTreasuryTextField.setColumns(10);
 		
 		JButton btnSearch = new JButton("Search");
-		btnSearch.setBounds(425, 99, 135, 23);
+		btnSearch.setBounds(451, 99, 109, 23);
 		contentPane.add(btnSearch);
+		{
+			JLabel lblLogout = new JLabel("");
+			lblLogout.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					Login window = new Login();
+					window.frame.setVisible(true);
+					window.frame.setLocationRelativeTo(null);
+					dispose();
+				}
+			});
+			lblLogout.setIcon(new ImageIcon(EventDialog.class.getResource("/clubmanager/ui/pictures/LOOG.png")));
+			lblLogout.setBounds(532, 11, 70, 70);
+			getContentPane().add(lblLogout);
+		}
+		{
+			JLabel lblLogOut = new JLabel("Log out");
+			lblLogOut.setBounds(542, 81, 46, 14);
+			getContentPane().add(lblLogOut);
+		}
 		
-		JLabel label = new JLabel("");
-		label.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));
-		label.setBounds(0, -13, 615, 640);
-		contentPane.add(label);
+		JLabel label_1 = new JLabel("");
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ManageInterface frame = new ManageInterface();
+				frame.setVisible(true);
+				dispose();			}
+		});
+		label_1.setIcon(new ImageIcon(TreasuryApp.class.getResource("/clubmanager/ui/pictures/home.png")));
+		label_1.setBounds(10, 11, 55, 50);
+		contentPane.add(label_1);
+		
+		Sumtf = new JTextField("");
+		Sumtf.setBounds(230, 425, 330, 29);
+		contentPane.add(Sumtf);
+		Sumtf.setColumns(10);
+		
+		JButton btnCalculateSum = new JButton("Calculate Sum");
+		btnCalculateSum.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				List<Treasury> treasury = null;
+				int sum=0;
+				 try {
+					treasury = treasuryDAO.getAllTreasury();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for (int i =0;i<treasury.size();i++)
+				{	
+					sum+=treasury.get(i).getSum();
+				}
+				Sumtf.setText(Integer.toString(sum));
+			}
+		});
+		btnCalculateSum.setBounds(52, 428, 155, 23);
+		contentPane.add(btnCalculateSum);
+		
+		JLabel labelbg = new JLabel("");
+		labelbg.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));
+		labelbg.setBounds(0, -13, 615, 640);
+		contentPane.add(labelbg);
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Get last name from the text field
@@ -215,6 +279,7 @@ public class TreasuryApp extends JFrame {
 
 				// show dialog
 				dialog.setVisible(true);
+			
 			}
 		});
 	}
@@ -234,5 +299,4 @@ public class TreasuryApp extends JFrame {
 		}
 		
 	}
-
 }
