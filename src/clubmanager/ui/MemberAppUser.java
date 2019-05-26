@@ -29,16 +29,13 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class MemberApp extends JFrame {
+public class MemberAppUser extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField lastNameTextField;
 	private JButton btnSearch;
 	private JScrollPane scrollPane;
 	private JTable table;
-	private JButton btnAddEmployee;
-	private JButton btnUpdateEmployee;
-	private JButton btnDeleteEmployee;
 	
 	
 	private MemberDAO memberDAO;//important attribut used to have the ability to perform 
@@ -52,7 +49,7 @@ public class MemberApp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MemberApp frame = new MemberApp();
+					MemberAppUser frame = new MemberAppUser();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -64,11 +61,11 @@ public class MemberApp extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MemberApp() {
+	public MemberAppUser() {
 		setResizable(false);
 		setTitle("ClubManager App                                Members");
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MemberApp.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MemberAppUser.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		
 		// create the DAO
 		try {
@@ -88,23 +85,11 @@ public class MemberApp extends JFrame {
 		contentPane.setLayout(null);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(52, 149, 508, 244);
+		scrollPane.setBounds(52, 156, 508, 365);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		
-		btnAddEmployee = new JButton("Add Member");
-		btnAddEmployee.setBounds(52, 493, 142, 23);
-		contentPane.add(btnAddEmployee);
-		
-		btnUpdateEmployee = new JButton("Update Member");
-		btnUpdateEmployee.setBounds(243, 493, 142, 23);
-		contentPane.add(btnUpdateEmployee);
-		
-		btnDeleteEmployee = new JButton("Delete Member");
-		btnDeleteEmployee.setBounds(425, 493, 135, 23);
-		contentPane.add(btnDeleteEmployee);
 		
 		JLabel lblEnterLastName = new JLabel("Enter the last name ");
 		lblEnterLastName.setBounds(52, 103, 127, 14);
@@ -123,7 +108,7 @@ public class MemberApp extends JFrame {
 		lblNewLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				ManageInterface frame = new ManageInterface();
+				ManageInterfaceUser frame = new ManageInterfaceUser();
 				frame.setVisible(true);
 				dispose();
 			}
@@ -148,7 +133,7 @@ public class MemberApp extends JFrame {
 			lblLogOut.setBounds(542, 81, 46, 14);
 			getContentPane().add(lblLogOut);
 		}
-		lblNewLabel.setIcon(new ImageIcon(MemberApp.class.getResource("/clubmanager/ui/pictures/home.png")));
+		lblNewLabel.setIcon(new ImageIcon(MemberAppUser.class.getResource("/clubmanager/ui/pictures/home.png")));
 		lblNewLabel.setBounds(10, 11, 48, 50);
 		contentPane.add(lblNewLabel);
 		
@@ -189,89 +174,9 @@ public class MemberApp extends JFrame {
 					}
 					*/
 				} catch (Exception exc) {
-					JOptionPane.showMessageDialog(MemberApp.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+					JOptionPane.showMessageDialog(MemberAppUser.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
 				}
 				
-			}
-		});
-		btnDeleteEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					// get the selected row
-					int row = table.getSelectedRow();
-
-					// make sure a row is selected
-					if (row < 0) {
-						JOptionPane.showMessageDialog(MemberApp.this, 
-								"You must select an member", "Error", JOptionPane.ERROR_MESSAGE);				
-						return;
-					}
-
-					// prompt the user
-					int response = JOptionPane.showConfirmDialog(
-							MemberApp.this, "Delete this member?", "Confirm", 
-							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-					if (response != JOptionPane.YES_OPTION) {
-						return;
-					}
-
-					// get the current member
-					Member tempMember = (Member) table.getValueAt(row, MemberTableModel.OBJECT_COL);//why cast ??
-					//EmployeeTableModel.OBJECT_COL has a default value of -1 to refer the object member
-					// delete the member
-					memberDAO.deleteMember(tempMember.getIdMember());
-					// getIdMember() getLogin() getPassword() getFirstName() getLastName() getEmail()
-
-					// refresh GUI
-					refreshEmployeesView();
-
-					// show success message
-					JOptionPane.showMessageDialog(MemberApp.this,
-							"Employee deleted succesfully.", "Member Deleted",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				} catch (Exception exc) {
-					JOptionPane.showMessageDialog(MemberApp.this,
-							"Error deleting member: " + exc.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-
-				
-			}
-		});
-		btnUpdateEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				// get the selected item
-				int row = table.getSelectedRow();
-				
-				// make sure a row is selected
-				if (row < 0) {// the default value of row must be negative
-					JOptionPane.showMessageDialog(MemberApp.this, "You must select an member", "Error",
-							JOptionPane.ERROR_MESSAGE);				
-					return;
-				}
-				
-				// get the current member
-				Member tempMember = (Member) table.getValueAt(row, MemberTableModel.OBJECT_COL);// why cast ?
-				
-				// create dialog
-				MemberDialog dialog = new MemberDialog(MemberApp.this, memberDAO, tempMember, true);
-
-				// show dialog
-				dialog.setVisible(true);
-			
-			}
-		});
-		btnAddEmployee.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// create dialog
-				MemberDialog dialog = new MemberDialog(MemberApp.this, memberDAO);//when we reverse the place of this
-
-				// show dialog
-				dialog.setVisible(true);
 			}
 		});
 	}

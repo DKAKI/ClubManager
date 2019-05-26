@@ -18,7 +18,7 @@ import java.awt.Toolkit;
 
 import clubmanager.dao.MemberDAO;
 
-public class ManageInterface extends JFrame {
+public class ManageInterfaceUser extends JFrame {
 
 	private JPanel contentPane;
 	private MemberDAO memberDAO;
@@ -31,7 +31,7 @@ public class ManageInterface extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ManageInterface frame1 = new ManageInterface();
+					ManageInterfaceUser frame1 = new ManageInterfaceUser();
 					frame1.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +43,7 @@ public class ManageInterface extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ManageInterface() {
+	public ManageInterfaceUser() {
 		try {
 			memberDAO = new MemberDAO();
 		} catch (Exception exc) {
@@ -52,7 +52,7 @@ public class ManageInterface extends JFrame {
 		}
 		setResizable(false);
 		setTitle("ClubManager App                                                      Main Menu");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ManageInterface.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ManageInterfaceUser.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 608, 621);
 		setLocationRelativeTo(null);
@@ -66,9 +66,10 @@ public class ManageInterface extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 		
-					MemberApp frame = new MemberApp();
+					MemberAppUser frame = new MemberAppUser();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					dispose();
 				
 			}
 		});
@@ -79,10 +80,11 @@ public class ManageInterface extends JFrame {
 		btnManageTreasury.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				TreasuryApp frame = new TreasuryApp();
+				TreasuryAppUser frame = new TreasuryAppUser();
 				frame.setVisible(true);
 				frame.setLocationRelativeTo(null);
 				dispose();
+				
 			
 				}
 		});
@@ -113,32 +115,33 @@ public class ManageInterface extends JFrame {
 		btnManageEvents.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				EventApp frame = new EventApp();
+				EventAppUser frame = new EventAppUser();
 				frame.setVisible(true);
 				frame.setLocationRelativeTo(null);
 				dispose();
+				
 			}	
 		});
 		btnManageEvents.setBounds(263, 449, 196, 76);
 		contentPane.add(btnManageEvents);
 		
 		JLabel lblMember = new JLabel("");
-		lblMember.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/member2s.png")));
+		lblMember.setIcon(new ImageIcon(ManageInterfaceUser.class.getResource("/clubmanager/ui/pictures/member2s.png")));
 		lblMember.setBounds(84, 127, 132, 93);
 		contentPane.add(lblMember);
 		
 		JLabel lblEvent = new JLabel("");
-		lblEvent.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/EVENT.png")));
+		lblEvent.setIcon(new ImageIcon(ManageInterfaceUser.class.getResource("/clubmanager/ui/pictures/EVENT.png")));
 		lblEvent.setBounds(80, 422, 125, 113);
 		contentPane.add(lblEvent);
 		
 		JLabel lbltreasury = new JLabel("");
-		lbltreasury.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/finance_-68-512.png")));
+		lbltreasury.setIcon(new ImageIcon(ManageInterfaceUser.class.getResource("/clubmanager/ui/pictures/finance_-68-512.png")));
 		lbltreasury.setBounds(84, 269, 121, 110);
 		contentPane.add(lbltreasury);
 		
 		JLabel labelbg = new JLabel("");
-		labelbg.setIcon(new ImageIcon(ManageInterface.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));
+		labelbg.setIcon(new ImageIcon(ManageInterfaceUser.class.getResource("/clubmanager/ui/pictures/CLUB MANAGER BG.jpg")));
 		labelbg.setBounds(-21, -11, 636, 640);
 		contentPane.add(labelbg);
 	}

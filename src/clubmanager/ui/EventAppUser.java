@@ -22,7 +22,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class EventApp extends JFrame {
+public class EventAppUser extends JFrame {
 	private EventDAO eventDAO;
 	private JTable table;
 	private JPanel contentPane;
@@ -34,7 +34,7 @@ public class EventApp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EventApp frame = new EventApp();
+					EventAppUser frame = new EventAppUser();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,11 +46,11 @@ public class EventApp extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EventApp() {
+	public EventAppUser() {
 		setResizable(false);
 		setTitle("ClubManager App                                                      Events");
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EventApp.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EventAppUser.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		
 		// create the DAO
 		try {
@@ -70,7 +70,7 @@ public class EventApp extends JFrame {
 		
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(52, 149, 508, 244);
+		scrollPane.setBounds(52, 149, 508, 361);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -95,17 +95,6 @@ public class EventApp extends JFrame {
 			lblLogOut.setBounds(542, 81, 46, 14);
 			getContentPane().add(lblLogOut);
 		}
-		JButton btnAddEvent = new JButton("Add Event");
-		btnAddEvent.setBounds(52, 493, 142, 23);
-		contentPane.add(btnAddEvent);
-		
-		JButton btnUpdateEvent = new JButton("Update Event");
-		btnUpdateEvent.setBounds(243, 493, 142, 23);
-		contentPane.add(btnUpdateEvent);
-		
-		JButton btnDeleteEvent = new JButton("Delete Event");
-		btnDeleteEvent.setBounds(425, 493, 135, 23);
-		contentPane.add(btnDeleteEvent);
 		
 		JLabel lblEnterResponsibleEvent = new JLabel("Enter the name of the Name of Event ");
 		lblEnterResponsibleEvent.setBounds(52, 103, 241, 14);
@@ -124,12 +113,12 @@ public class EventApp extends JFrame {
 		label_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ManageInterface frame = new ManageInterface();
+				ManageInterfaceUser frame = new ManageInterfaceUser();
 				frame.setVisible(true);
 				dispose();
 			}
 		});
-		label_1.setIcon(new ImageIcon(EventApp.class.getResource("/clubmanager/ui/pictures/home.png")));
+		label_1.setIcon(new ImageIcon(EventAppUser.class.getResource("/clubmanager/ui/pictures/home.png")));
 		label_1.setBounds(10, 11, 53, 50);
 		contentPane.add(label_1);
 		
@@ -167,89 +156,9 @@ public class EventApp extends JFrame {
 					
 			
 				} catch (Exception exc) {
-					JOptionPane.showMessageDialog(EventApp.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+					JOptionPane.showMessageDialog(EventAppUser.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
 				}
 				
-			}
-		});
-		btnDeleteEvent.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					// get the selected row
-					int row = table.getSelectedRow();
-
-					// make sure a row is selected
-					if (row < 0) {
-						JOptionPane.showMessageDialog(EventApp.this, 
-								"You must select a sum", "Error", JOptionPane.ERROR_MESSAGE);				
-						return;
-					}
-
-					// prompt the user
-					int response = JOptionPane.showConfirmDialog(
-							EventApp.this, "Delete this sum?", "Confirm", 
-							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-					if (response != JOptionPane.YES_OPTION) {
-						return;
-					}
-
-					// get the current event
-					Event tempEvent = (Event) table.getValueAt(row, EventTableModel.OBJECT_COL);//why cast ??
-					//EmployeeTableModel.OBJECT_COL has a default value of -1 to refer the object event
-					// delete the event
-					eventDAO.deleteEvent(tempEvent.getId_event());
-					
-
-					// refresh GUI
-					refreshEventsView();
-
-					// show success message
-					JOptionPane.showMessageDialog(EventApp.this,
-							"Sum deleted succesfully.", "Sum Deleted",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				} catch (Exception exc) {
-					JOptionPane.showMessageDialog(EventApp.this,
-							"Error deleting Sum: " + exc.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-
-				
-			}
-		});
-		btnUpdateEvent.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				// get the selected item
-				int row = table.getSelectedRow();
-				
-				// make sure a row is selected
-				if (row < 0) {// the default value of row must be negative
-					JOptionPane.showMessageDialog(EventApp.this, "You must select a Sum", "Error",
-							JOptionPane.ERROR_MESSAGE);				
-					return;
-				}
-				
-				// get the current event
-				Event tempEvent =  (Event) table.getValueAt(row, EventTableModel.OBJECT_COL);// why cast ?
-				
-				// create dialog
-				EventDialog dialog = new EventDialog(EventApp.this, eventDAO, tempEvent, true);
-
-				// show dialog
-				dialog.setVisible(true);
-			
-			}
-		});
-		btnAddEvent.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// create dialog
-				EventDialog dialog = new EventDialog(EventApp.this, eventDAO);//when we reverse the place of this
-
-				// show dialog
-				dialog.setVisible(true);
 			}
 		});
 	}

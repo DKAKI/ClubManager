@@ -17,6 +17,7 @@ import com.jgoodies.forms.factories.FormFactory;
 
 import clubmanager.core.Member;
 import clubmanager.dao.MemberDAO;
+import clubmanager.dao.RegisterDAO;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -41,6 +42,7 @@ public class MemberDialog extends JDialog {
 
 	private Member previousMember = null;
 	private boolean updateMode = false;
+	RegisterDAO registerDAO;
 
 	public MemberDialog(MemberApp theMemberApp,
 			MemberDAO MemberDAO, Member thePreviousEmployee, boolean theUpdateMode) {
@@ -80,6 +82,16 @@ public class MemberDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public MemberDialog() {
+		
+		
+		// create the DAO
+				try {
+					registerDAO = new RegisterDAO();
+				} catch (Exception exc) {
+					JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); //what does this method perform with these 4 parameters??
+				//why sometimes we write just this without refering to the the class or the object
+				}
+				
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MemberDialog.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -91,6 +103,7 @@ public class MemberDialog extends JDialog {
 		passwordTextField = new JTextField();
 		passwordTextField.setBounds(199, 194, 322, 29);
 		getContentPane().add(passwordTextField);
+	
 		{
 			loginTextField = new JTextField();
 			loginTextField.setBounds(199, 126, 322, 29);
@@ -216,10 +229,33 @@ public class MemberDialog extends JDialog {
 
 		try {
 			// save to the database
-			if (updateMode) {
-				memberDAO.updateMember(tempMember);
+			if (updateMode ) {
+				if (!registerDAO.isValidEmailAddress(email)) {
+					JOptionPane.showMessageDialog(memberApp,"The email is invalid ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;}
+					
+				if (login.equals("") || password.equals("") ||  firstName.equals("") ||  lastName.equals("") ||  email.equals("")) {
+					
+					JOptionPane.showMessageDialog(memberApp,"You should fill out all the fields ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else {
+					
+					memberDAO.updateMember(tempMember);
+				}
+					
 			} else {
-				memberDAO.addMember(tempMember);
+				
+				if (!registerDAO.isValidEmailAddress(email)) {
+					JOptionPane.showMessageDialog(memberApp,"The email is invalid ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;}
+				if (login.equals("") || password.equals("") ||  firstName.equals("") ||  lastName.equals("") ||  email.equals("")) {
+					
+					JOptionPane.showMessageDialog(memberApp,"You should fill out all the fields ", "Error",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+					else
+						memberDAO.addMember(tempMember);
 			}
 
 			// close dialog

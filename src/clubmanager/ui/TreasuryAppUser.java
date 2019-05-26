@@ -24,12 +24,12 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class TreasuryApp extends JFrame {
+public class TreasuryAppUser extends JFrame {
 	private TreasuryDAO treasuryDAO;
 	private JTable table;
 	private JPanel contentPane;
 	private JTextField Sumtf;
-	static TreasuryApp frame = new TreasuryApp();
+
 	/**
 	 * Launch the application.
 	 */
@@ -37,7 +37,7 @@ public class TreasuryApp extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
+					TreasuryAppUser frame = new TreasuryAppUser();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -49,10 +49,10 @@ public class TreasuryApp extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TreasuryApp() {
+	public TreasuryAppUser() {
 		setTitle("ClubManager App                                                      Treasury");
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(TreasuryApp.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TreasuryAppUser.class.getResource("/clubmanager/ui/pictures/logoApp.png")));
 		
 		// create the DAO
 		try {
@@ -72,23 +72,15 @@ public class TreasuryApp extends JFrame {
 		
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(52, 149, 508, 244);
+		scrollPane.setBounds(52, 149, 508, 314);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
 		JButton btnAddTreasury = new JButton("Add Contribution");
-		btnAddTreasury.setBounds(52, 493, 155, 23);
+		btnAddTreasury.setBounds(52, 491, 155, 23);
 		contentPane.add(btnAddTreasury);
-		
-		JButton btnUpdateTreasury = new JButton("Update Contribution");
-		btnUpdateTreasury.setBounds(230, 493, 165, 23);
-		contentPane.add(btnUpdateTreasury);
-		
-		JButton btnDeleteTreasury = new JButton("Delete Contribution");
-		btnDeleteTreasury.setBounds(418, 493, 142, 23);
-		contentPane.add(btnDeleteTreasury);
 		
 		JLabel lblEnterResponsibleTreasury = new JLabel("Enter the name of the Responsible of Treasury ");
 		lblEnterResponsibleTreasury.setBounds(52, 103, 270, 14);
@@ -127,16 +119,16 @@ public class TreasuryApp extends JFrame {
 		label_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ManageInterface frame = new ManageInterface();
+				ManageInterfaceUser frame = new ManageInterfaceUser();
 				frame.setVisible(true);
 				dispose();			}
 		});
-		label_1.setIcon(new ImageIcon(TreasuryApp.class.getResource("/clubmanager/ui/pictures/home.png")));
+		label_1.setIcon(new ImageIcon(TreasuryAppUser.class.getResource("/clubmanager/ui/pictures/home.png")));
 		label_1.setBounds(10, 11, 55, 50);
 		contentPane.add(label_1);
 		
 		Sumtf = new JTextField("");
-		Sumtf.setBounds(230, 425, 330, 29);
+		Sumtf.setBounds(418, 491, 142, 23);
 		contentPane.add(Sumtf);
 		Sumtf.setColumns(10);
 		
@@ -159,7 +151,7 @@ public class TreasuryApp extends JFrame {
 				Sumtf.setText(Integer.toString(sum));
 			}
 		});
-		btnCalculateSum.setBounds(52, 428, 155, 23);
+		btnCalculateSum.setBounds(237, 491, 155, 23);
 		contentPane.add(btnCalculateSum);
 		
 		JLabel labelbg = new JLabel("");
@@ -196,86 +188,15 @@ public class TreasuryApp extends JFrame {
 					
 			
 				} catch (Exception exc) {
-					JOptionPane.showMessageDialog(TreasuryApp.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+					JOptionPane.showMessageDialog(TreasuryAppUser.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
 				}
 				
-			}
-		});
-		btnDeleteTreasury.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					// get the selected row
-					int row = table.getSelectedRow();
-
-					// make sure a row is selected
-					if (row < 0) {
-						JOptionPane.showMessageDialog(TreasuryApp.this, 
-								"You must select a sum", "Error", JOptionPane.ERROR_MESSAGE);				
-						return;
-					}
-
-					// prompt the user
-					int response = JOptionPane.showConfirmDialog(
-							TreasuryApp.this, "Delete this sum?", "Confirm", 
-							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-					if (response != JOptionPane.YES_OPTION) {
-						return;
-					}
-
-					// get the current treasury
-					Treasury tempTreasury = (Treasury) table.getValueAt(row, TreasuryTableModel.OBJECT_COL);//why cast ??
-					//EmployeeTableModel.OBJECT_COL has a default value of -1 to refer the object treasury
-					// delete the treasury
-					treasuryDAO.deleteTreasury(tempTreasury.getId_treasury());
-					
-
-					// refresh GUI
-					refreshTreasuryView();
-
-					// show success message
-					JOptionPane.showMessageDialog(TreasuryApp.this,
-							"Sum deleted succesfully.", "Sum Deleted",
-							JOptionPane.INFORMATION_MESSAGE);
-
-				} catch (Exception exc) {
-					JOptionPane.showMessageDialog(TreasuryApp.this,
-							"Error deleting Sum: " + exc.getMessage(), "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-
-				
-			}
-		});
-		btnUpdateTreasury.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				// get the selected item
-				int row = table.getSelectedRow();
-				
-				// make sure a row is selected
-				if (row < 0) {// the default value of row must be negative
-					JOptionPane.showMessageDialog(TreasuryApp.this, "You must select a Sum", "Error",
-							JOptionPane.ERROR_MESSAGE);				
-					return;
-				}
-				
-				// get the current treasury
-				Treasury tempTreasury =  (Treasury) table.getValueAt(row, TreasuryTableModel.OBJECT_COL);// why cast ?
-				
-				// create dialog
-				TreasuryDialog dialog = new TreasuryDialog(TreasuryApp.this, treasuryDAO, tempTreasury, true);
-
-				// show dialog
-				dialog.setVisible(true);
-			
 			}
 		});
 		btnAddTreasury.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// create dialog
-				TreasuryDialog dialog = new TreasuryDialog(TreasuryApp.this, treasuryDAO);//when we reverse the place of this
+				TreasuryDialog dialog = new TreasuryDialog(TreasuryAppUser.this, treasuryDAO);//when we reverse the place of this
 
 				// show dialog
 				dialog.setVisible(true);
